@@ -3,16 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const mongoConnection = require('./config/mongo-connection');
-const cors = require('cors');
-var bodyParser = require('body-parser');
-
-const corsOptions = {
-  origin: 'https://www.uobo.ca/',
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
 
 var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -21,17 +14,13 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
-// app.use(express.json());
-app.use(express.urlencoded({ 
-  extended: false,
-  limit: '1000mb'
- }));
-app.use(bodyParser.json({ limit: '1000mb' }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use("/uploads", express.static(__dirname + "/uploads"));
-app.use(cors());
+
 app.use('/', indexRouter);
+app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

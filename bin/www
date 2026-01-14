@@ -5,14 +5,14 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('uobo:server');
+var debug = require('debug')('pushpay003:server');
 var http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '8000');
+var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
@@ -43,7 +43,6 @@ function normalizePort(val) {
 
   if (port >= 0) {
     // port number
-    console.log("Runing on a port: ", port);
     return port;
   }
 
